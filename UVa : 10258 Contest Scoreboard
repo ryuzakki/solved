@@ -1,0 +1,85 @@
+#include <bits/stdc++.h>
+using namespace std;
+#define ll long long
+struct contest
+{
+    int time;
+    int solved;
+    int wrong[10];
+    int id;
+    contest()
+    {
+        id=solved=time=0;
+        for(int i=0;i<10;i++)
+            wrong[i]=0;
+    }
+
+};
+bool comp(contest b,contest a)
+{
+    if(a.solved!=b.solved)
+    return b.solved>a.solved;
+
+    if(a.time!=b.time)
+    return b.time<a.time;
+
+    if(a.id!=b.id)
+    return b.id<a.id;
+}
+
+long int arr[101];
+
+int main()
+{
+int t;
+cin>>t;
+cin.ignore();
+string s;
+getline(cin,s);
+bool ch=0;
+map<pair<int,int> ,int> mp;
+while(t--)
+{
+contest contestants[101];
+int id,prb,time;
+char x;
+while(getline(cin,s)&&s.size()>0)
+{
+
+stringstream ss(s);
+ss>>id>>prb>>time>>x;
+
+contestants[id].id=id;
+if(x=='R'||x=='E'||x=='U')
+continue;
+
+if(x=='I')
+{
+        contestants[id].wrong[prb]+=20;
+
+}
+else if(x=='C')
+{
+if(!mp[make_pair(id,prb)])
+{
+        contestants[id].solved++;
+        contestants[id].time+=(time+contestants[id].wrong[prb]);
+        mp[make_pair(id,prb)]=1;
+}
+}
+}
+sort(contestants,contestants+101,comp);
+if(ch)
+cout<<endl;
+ch=1;
+for(int i=0;i<101;i++)
+{
+if(contestants[i].id)
+   cout<<contestants[i].id<<" "<<contestants[i].solved<<" "<<contestants[i].time<<endl;
+}
+mp.clear();
+}
+
+}
+
+
