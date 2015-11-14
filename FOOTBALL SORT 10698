@@ -1,0 +1,116 @@
+#include <bits/stdc++.h>
+using namespace std;
+#define ll long long
+map<string,int>mp;
+struct team
+{
+    string name;
+    int point;
+    int games;
+    int score;
+    int suffer;
+    int diff;
+    team()
+    {
+        point=games=score=suffer=diff=0;
+    }
+};
+void add(vector<team>&teams,string s,int g1,int g2)
+{
+    int i=mp[s];
+    teams[i].score+=g1;
+    teams[i].suffer+=(g2);
+    teams[i].diff+=(g1-g2);
+    teams[i].games++;
+
+    if(g1>g2)
+        teams[i].point+=3;
+    if(g1==g2)
+        teams[i].point+=1;
+}
+bool comp_names(string & s2,string & s1)
+{
+    for(int i=0;i<min(s1.size(),s2.size());i++)
+    {
+       if( tolower(s2[i]) != tolower(s1[i]))
+        return tolower(s2[i]) < tolower(s1[i]);
+    }
+    return s1.size()>s2.size();
+}
+bool comp(team a,team b)
+{
+
+    if(a.point != b.point)
+        return b.point<a.point;
+    if(a.diff!=b.diff)
+        return b.diff<a.diff;
+    if(a.score!=b.score)
+        return b.score<a.score;
+
+    return comp_names(a.name,b.name);
+
+
+
+}
+int main()
+{
+
+  int n,m,g1,g2;
+    char x;
+    string s1,s2;
+   bool f=true;
+    while(cin>>n>>m)
+    {
+        if(n==0&&m==0)
+            break;
+
+        if(f)f=false;
+        else
+        cout<<endl;
+
+    vector<team>teams;
+    cin.ignore();
+    for(int i=0;i<n;i++)
+    {
+        getline(cin,s1);
+        team temp;
+        temp.name=s1;
+        teams.push_back(temp);
+        mp[s1]=i;
+    }
+    for(int i=0;i<m;i++)
+    {
+       cin>>s1>>g1>>x>>g2>>s2;
+       add(teams,s1,g1,g2);
+       add(teams,s2,g2,g1);
+    }
+
+sort(teams.begin(),teams.end(),comp);
+
+int rank = 0;
+
+for(int i=0;i<teams.size();i++) {
+
+
+if (i == 0 || teams[i].point != teams[i-1].point || teams[i].diff != teams[i-1].diff || teams[i].score != teams[i-1].score)
+{
+rank = i + 1;
+printf("%2d. ", rank);
+}
+ else
+printf("    ");
+
+
+printf("%15s %3d %3d %3d %3d %3d ", teams[i].name.c_str(), teams[i].point, teams[i].games, teams[i].score, teams[i].suffer, teams[i].diff);
+
+if (teams[i].games == 0) printf("%6s\n", "N/A");
+else printf("%6.2f\n", teams[i].point * 100.0 / (3.0 * teams[i].games));
+
+
+        }
+        mp.clear();
+
+    }
+
+
+}
