@@ -1,0 +1,48 @@
+#include <bits/stdc++.h>
+using namespace std;
+#define ll long long
+int main()
+{
+int t;
+cin>>t;
+string s,s1,s2;
+cin.ignore();
+getline(cin,s);
+vector<string>v;
+vector<int>vec;
+string str;
+int n;
+map<int,string>m;
+bool ch=0;
+while(t--)
+{
+   getline(cin,s1);
+   getline(cin,s2);
+   stringstream ss(s1);
+   stringstream st(s2);
+   while(ss>>n)
+   vec.push_back(n);
+   while(st>>str)
+   v.push_back(str);
+
+   for(int i=0;i<v.size();i++)
+    m[vec[i]]=v[i];
+   sort(vec.begin(),vec.end());
+
+getline(cin,s);
+if(ch)
+cout<<endl;
+ch=1;
+
+   for(int i=0;i<v.size();i++)
+    {
+       cout<<m[vec[i]]<<endl;
+    }
+
+m.clear();
+v.clear();
+vec.clear();
+
+}
+}
+
