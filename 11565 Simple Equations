@@ -1,0 +1,30 @@
+#include<bits/stdc++.h>
+using namespace std;
+int main()
+{
+int A,B,C;
+int t;
+cin>>t;
+while(t--)
+{
+cin>>A>>B>>C;
+bool sol=0;
+for(int x=-100;x<=100&&!sol;x++)
+if((x*x)<=C)
+for(int y=-100;y<=100&&!sol;y++)
+if((x*x)+(y*y)<=C)
+for(int z=-100;z<=100&&!sol;z++)
+{
+    if(x!=y && x!=z&& z!=y && (x*y*z)==B && (x*x)+(y*y)+(z*z)==C && x+y+z==A )
+    {
+        printf("%d %d %d\n",x,y,z);
+        sol=1;
+    }
+}
+
+if(!sol)
+    printf("No solution.\n");
+
+}
+
+}
